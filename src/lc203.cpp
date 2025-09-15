@@ -2,10 +2,17 @@
 
 using namespace std;
 
-// https://leetcode.cn/problems/remove-linked-list-elements/submissions/662798137/
+/**
+    原题链接: https://leetcode.cn/problems/remove-linked-list-elements/submissions/662798137/
+*/
+
 
 /**
-    移除链表，本质上很简单，但是写的不熟练，包括 链表创建，删除时使用delete等
+    要点：
+    移除链表，本质上很简单，但是写的不熟练，包括: 
+        1. 链表创建，打印
+        2. 删除时使用delete
+        3. 要注意，只用cur节点就好，不必分cur和next，这样可以减少心智负担
 */
 
 /**
@@ -19,73 +26,64 @@ using namespace std;
     3. 7 4 7 7 7 7          期待结果: 空链表
 */
 
-class ListNode{
-    public: 
+class Node{
+    public:
     int val;
-    ListNode* next;
+    Node* next;
 
-    ListNode(int val){
+    Node(int val){
         this->val = val;
-        this->next = nullptr;
     }
 };
 
-/*
-    尾插法读入链表
-    链表具有一个虚拟头节点
-*/
-ListNode* ReadList(int n){
-    ListNode* dummyHead = new ListNode(-1);
-    ListNode* tail = dummyHead;
+// 读入链表，带虚拟头节点
+Node* ReadList(int n){
+    Node* dummyHead = new Node(-1);
+    Node* tail = dummyHead;
 
     while(n--){
         int val;
         cin >> val;
-        ListNode* newNode = new ListNode(val);
+
+        Node* newNode = new Node(val);
+
         tail->next = newNode;
         tail = tail->next;
     }
-    
+
     return dummyHead;
-}   
-    
-void PrintList(ListNode* head){
+}
+
+void PrintList(Node* head){
     if(head == nullptr){
-        cout << "Empyt List" << endl;
-        return;
+        cout << "empty list" << endl;
     }
 
     while(head != nullptr){
         cout << head->val << " ";
         head = head->next;
     }
-    cout << endl;
 }
 
 int main(){
-    int n, target;
+    int target, n;
     cin >> target >> n;
-    
-    ListNode* dummyHead = ReadList(n);
 
-    ListNode* current = dummyHead;
-    ListNode* next    = dummyHead->next;
+    Node* dummyHead = ReadList(n);
 
-    while(next != nullptr){
-        if(next->val == target){
-            ListNode* temp = next;
+    Node* cur = dummyHead;
 
-            next = next->next;
-            current->next = next;
-
+    while(cur->next != nullptr){
+        if(cur->next->val == target){
+            Node* temp = cur->next;
+            cur->next = cur->next->next;
             delete temp;
         }else{
-            current = current->next;
-            next = next->next;
+            cur = cur->next;
         }
     }
 
-    ListNode* head = dummyHead->next;
-    delete  dummyHead;
+    Node* head = dummyHead->next;
+    delete dummyHead;
     PrintList(head);
 }

@@ -36,16 +36,14 @@ using namespace std;
 
 const bool DEBUG = false;
 
-void PrintVec(const vector<int>& vec){
+static inline void PrintVec(const vector<int>& vec){
     if(!DEBUG) return;
 
-    for(const int& i : vec){
-        cout << i << " ";
-    }
+    std::for_each(vec.begin(), vec.end(), [](int x){ cout << x << " "; });
     cout << endl;
 }
 
-void PrintMatrix(const vector<vector<int>>& nums){
+static inline void PrintMatrix(const vector<vector<int>>& nums){
     if(!DEBUG) return;
 
     if(nums.size() < 1){
@@ -53,9 +51,7 @@ void PrintMatrix(const vector<vector<int>>& nums){
         return;
     }
 
-    for(const vector<int>& line : nums){
-        PrintVec(line);
-    }
+    std::for_each(nums.begin(), nums.end(), [](const vector<int>& vec) {PrintVec(vec);});
 }
 
 static inline void UpdateHead(const vector<int>& nums, int& head ,const int& tail){

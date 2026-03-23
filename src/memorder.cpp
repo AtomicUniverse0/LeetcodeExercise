@@ -12,12 +12,14 @@ int num = 0;
 
 void relax_producer(){
     num = 42;
+    // std::atomic_thread_fence(std::memory_order_release);
     ready.store(true, std::memory_order_relaxed);
     // ready.store(true, std::memory_order_release);
 }
 
 void relax_consumer(){
     while(!ready.load(std::memory_order_relaxed)){}
+    // std::atomic_thread_fence(std::memory_order_acquire);
     // while(!ready.load(std::memory_order_acquire)){}
     assert(num == 42);
 }

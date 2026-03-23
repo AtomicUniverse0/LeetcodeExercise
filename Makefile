@@ -1,5 +1,7 @@
 CXX := clang++
-CXXFLAGS := -O2 -Wall -std=c++17
+CXXFLAGS := -O2 -Wall -std=c++17 
+
+# -fsanitize=thread
 
 SRC_DIR := src
 OUT_DIR := output

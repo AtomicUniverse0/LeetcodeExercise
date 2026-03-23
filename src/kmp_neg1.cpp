@@ -11,6 +11,8 @@
 输入样例：
     text = "sadbutsad", pattern = "sad"  期待结果: 0
     text = "leetcode",  pattern = "leeto"  期待结果: -1
+    text = "aaaaa"      pattern = "aab"     期待结果: 0
+    text = ""mississippi" pattern = "issip" 期待结果: 4
 */
 #include <iostream>
 #include <vector>

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cassert>
 #include <atomic>
+#include <mutex>
 #include <optional>
 #include <thread>
 
@@ -8,7 +9,7 @@ using namespace std;
 
 class SPSC{
 public:
-    const static int CAPACITY = 3;
+    const static int CAPACITY = 50;
 
     bool push(int value){
         int h = head.load(std::memory_order_acquire);
@@ -44,28 +45,45 @@ private:
     atomic<int> tail{0};
 } spsc;
 
+mutex iomtx;
+
 void producer(){
     // 写入 -1 就意味着结束
-    int n = 5 * SPSC::CAPACITY;
+    int n = 500 * SPSC::CAPACITY;
     assert(n > 0);
 
+    int write_fault = 0;
     for(int i=0; i < n; i++){
-        while(! spsc.push(i)); 
-        // cout << "producer produce " << i << endl;
+        while(! spsc.push(i)){
+            ++write_fault;
+        }
     }
 
     while(! spsc.push(-1));
+
+    {
+        unique_lock<mutex> lock(iomtx);
+        cout << "producer write fault: " << write_fault << " total write: " << n << endl;
+    }
 }
 
 void consumer(){
+    int read_fault = 0;
     while(true){
         auto opt_i = spsc.pop();
 
         if(opt_i.has_value() && opt_i.value() != -1){
-            // cout << "consumer consume " << opt_i.value() << endl;
+
         }else if(opt_i.has_value()){
             break;
+        }else{
+            ++read_fault;
         }
+    }
+
+    {
+        unique_lock<mutex> lock(iomtx);
+        cout << "consumer read fault: " << read_fault << endl;
     }
 }
 

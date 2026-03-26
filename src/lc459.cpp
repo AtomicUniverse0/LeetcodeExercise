@@ -18,6 +18,7 @@
             abcabcabcabc            true
             abaababaab              true
             abacababacab            true
+            abcd                    false
 */
 #include <cassert>
 #include <cstddef>

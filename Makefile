@@ -21,3 +21,5 @@ $(OUT_DIR)/% : $(SRC_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) $< -o $@
 
 .PRECIOUS: $(OUT_DIR)/%
+
+var foo = "method(" + argument1+","+argument2+")";

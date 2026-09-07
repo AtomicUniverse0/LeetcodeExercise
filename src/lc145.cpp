@@ -18,6 +18,10 @@
     1 : 1
 */
 
+/*
+    二叉树的右视图，lc199，很简单，需要一眼看出思路
+*/
+
 #include <iostream>
 #include <sstream>
 #include <string>

@@ -65,9 +65,9 @@ void printTree(Node<T>* root){
     vector<string> result;
     queue<Node<T>*> q;
     q.push(root);
+
     bool should_stop = false;
     uint32_t last_layer_size = 0;
-
     while( not should_stop){
         uint32_t n = q.size();
         last_layer_size = n;

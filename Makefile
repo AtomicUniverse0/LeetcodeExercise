@@ -1,4 +1,4 @@
-CXX := clang++
+CXX := /usr/bin/clang++
 CXXFLAGS := -O2 -Wall -std=c++17 -fsanitize=thread
 
 SRC_DIR := src

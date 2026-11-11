@@ -13,10 +13,11 @@ using namespace std;
 /**
     要点：LRU 缓存，已经比较熟练了，要注意以下几点：
 
-    Node 不要有key，还要有val，你说这是为啥?
     Node 干脆还是独立于LinkList比较好，这样写代码快一些
+    可以让LRUCache 的 map 使用 unique_ptr<> 来管理Node的生命周期，这样就可以不写LinkList的析构函数了
     LinkList 记得写析构函数，而且要虚的。
     LinkList 的接口有： 头插入，得到尾部，删除节点，移动到头部， 应该优化成: 得到尾部，删除节点，插入节点到指定节点后，移动到头部
+    试试写成模板格式
 
 */
 
@@ -40,9 +41,6 @@ using namespace std;
 */
 
 
-/**
-    已通过校验
-*/
 class LinkList{
 private:
     friend class LRUCache;

@@ -20,8 +20,8 @@ using std::unique_lock;
 using std::deque;
 
 
-// 比较难，主要是在是lambda 拷贝那里， std::function<> 要求传入的内容可拷贝，如果传入
-// 一个 lambda，那么要求 lambda 也可拷贝
+// 比较难，主要是在是lambda 拷贝那里， std::function<> 要求传入的内容可拷贝，如果捕获
+// 的是无法拷贝的，就会导致错误，这种情况下可以考虑捕获一个指针
 
 template<std::size_t Capacity>
 class ThreadPool{
